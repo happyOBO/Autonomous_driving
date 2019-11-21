@@ -1,8 +1,7 @@
 ZumiGamma : 로스를 이용한 자율주행 응급차량 만들기
 ==================
 
-Overview
-------------------
+## Overview
 
   ROBOLINK사의 zumi로봇([로보링크주소](https://github.com/leggedrobotics/darknet_ros))을 이용하여 ROS에 기반한 자율주행 로봇을 개발한다.
   
@@ -24,3 +23,9 @@ Overview
 - 특정한 상황으로 인해 Emergency Mode를 작동시킬 수 있다.
   - 도로에서 주행을 하되, 앞에 차량이 있을시에 비켜서 갈 수 있다.
   - traffic sign을 무시하고 주행한다.
+
+## Detect Person & Traffic sign
+
+    cd YOLO
+    python3 cam_demo.py
+    
