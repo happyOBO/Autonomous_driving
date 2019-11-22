@@ -26,6 +26,7 @@ ZumiGamma : 로스를 이용한 자율주행 응급차량 만들기
 
 ## Detect Person & Traffic sign
 
+    git clone https://github.com/happyOBO/ZumiGamma
     cd YOLO
+    wget http://pjreddie.com/media/files/yolov3.weights
     python3 cam_demo.py
-    
