@@ -1,4 +1,4 @@
-<h1> Zumi Arduino
+<h1> Zumi Arduino</h1>
 
 Zumi 구동을 제어하는 Arduino 이다.  Motor의 속력과 Buzzer, LED, IR 모두 제어가능하다.  현재  IR을 이용해 라인트레이서를 구현하였다. 
 
@@ -8,7 +8,7 @@ Zumi 구동을 제어하는 Arduino 이다.  Motor의 속력과 Buzzer, LED, IR 
 
 - 우리 Zumi 구성에 필요 없을 것 같은 함수 및 코드들은 /**/ 주석처리 하였다.
 
-<h2> 코드 설명
+<h2> 코드 설명</h2>
 
 > **void AutoTracking()** 
 
@@ -44,7 +44,7 @@ Zumi 구동을 제어하는 Arduino 이다.  Motor의 속력과 Buzzer, LED, IR 
 
 
 
-<h2> 추가 구현
+<h2> 추가 구현</h2>
 
 컴퓨터에서 보내는 Value값을 통해 Zumi Arduino의 State를 결정하기 위하여  ROS를 통한 Value값을 받아들이 기위해 ROS통신 Node를 개발하며 동시에 상황에 따른 기능(Stop, Start,left turn,Right turn)들을 추가적으로 구현 할 것이다.  
 
