@@ -53,7 +53,8 @@ void setup() {
   pinMode(MUX_S1,OUTPUT);
   pinMode(MUX_S2,OUTPUT);
   pinMode(MUX_OUTPUT,OUTPUT);
-  digitalWrite(IR_EMIT_PIN,HIGH);
+  digitalWrite(IR_EMIT_PIN,HIGH); // Always Turn on IR_EMIT_PIN
+  
   Serial.begin(115200);
   
   
