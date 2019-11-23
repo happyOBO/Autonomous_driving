@@ -44,15 +44,11 @@ void leftpwm_commandCb(const std_msgs::Int16& cmd)
   
 }
 
-//subsciber를 위한 callback함수
-
 void rightpwm_commandCb(const std_msgs::Int16& cmd) 
 
 {
 
 }
-
-//subsciber를 위한 callback함수
 
 void result_yoloCb(const std_msgs::String& cmd) 
 
