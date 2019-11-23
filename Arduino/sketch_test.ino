@@ -53,7 +53,8 @@ void setup() {
   pinMode(MUX_S1,OUTPUT);
   pinMode(MUX_S2,OUTPUT);
   pinMode(MUX_OUTPUT,OUTPUT);
-  digitalWrite(IR_EMIT_PIN,HIGH);
+  digitalWrite(IR_EMIT_PIN,HIGH); // Always Turn on IR_EMIT_PIN
+  
   Serial.begin(115200);
   
   
@@ -118,23 +119,20 @@ void setup() {
 
   }
   while(1){
-    //업데이트 반복 . 50milli초마다 체크
+    //Repeat Update
     if((millis() +1) % 50 == 0){
       recieveData();// What recieveData??
-      //일단 에니메이션이 한 번 발생하면 카운트 다운을 시작한다.
       if(arduinoI2CMaster == false && warningcounter <200){
         warningCounter ++;
       }
       if(warningCounter >= 200){
       
-        //반복 시키려는 메인코드를 이쪽에 삽입 시켜라.
-        checkIfPibooted(); // What is checkIfPibooted ? : 50초 이상 아무 문제 없다면
-        //주미를 일으킨다. 그리고 메인코드를 읽을것이다.
+        //Main Code
+        checkIfPibooted(); // What is checkIfPibooted ? 면        
       }
-      // PI가 부팅 되는 동안 코드는 게쏙해서 반복 될 것이다.
-      //
+      // 
       if( arduinoI2CMaster == true){
-        switch(chargingState){ // 어떻게 CASE 1,2,3 인지 아냐?
+        switch(chargingState){ 
           case GOOD_BATTERY_DETECTED : { //CASE 3
             //주비가 정상적으로 부팅될경우
             if(chargeOnlyMode == true
@@ -196,11 +194,11 @@ void setup() {
             LEDbyte = 0b00000000; //LEDbyte가 뭐일까 그냥 변수 선언한거 아닌가?
           }
           chargingState = GOOD_BATTERY_DETECTED;
-        }// 이부분이 뭔데 UPDATE LED, BATTERY LEVEL하냐
+        }
         
       }
       LEDcount++;
-      batteryCount++;//if문 계속 돌때마다 Update해주는거구나
+      batteryCount++;
     }//결국 아무것도 들어있지 않은  우리 주미찡은 켜지고 애니메이션만 보여주고 아무 동장안하는구나.
   if(noteType >= 0) playNote(noteType, noteDuration);
   //playNote는 뭐하는놈임?
@@ -220,26 +218,26 @@ void loop() {
           
   
 }
-void AutoTracking(){
+void AutoTracking(){ 
   // RIGHT IR
   digitalWrite(MUX_S0, LOW);
   digitalWrite(MUX_S1, HIGH);
   digitalWrite(MUX_S2, LOW);
   delayMicroseconds(200);
-  s1 = analogRead(MUX_OUTPUT);
+  s1 = analogRead(MUX_OUTPUT); //Read RIGHT IR 
   // LEFT IR
   digitalWrite(MUX_S0, LOW);
   digitalWrite(MUX_S1, LOW);
   digitalWrite(MUX_S2, HIGH);
   delayMicroseconds(200);
-  s2 = analogRead(MUX_OUTPUT);
+  s2 = analogRead(MUX_OUTPUT); // Read LEFT IR
 
   s1 = map(s1, 45, 850, 0, 100);
   s2 = map(s2, 45, 880, 0, 100);
   
   normal = s1*(-1) + s2;
 
-  setMotorsToSpeed(50-normal,50+normal);  
+  setMotorsToSpeed(50-normal,50+normal);  //base speed 50
 }
 void checkIfPiBooted(){ //실행시킬 수 있는 상황인지 확인
   if ((millis() / 1000>50) //what millis??
@@ -257,18 +255,17 @@ void setMotorsToSpeed(int speedM1, int speedM2)
   byte motorState = 0;
   
   if (speedM1 < 0) {
-    speedM1 = abs(speedM1);
+    speedM1 = abs(speedM1); // if negative number 
   }
   if (speedM2 < 0) {
     speedM2 = abs(speedM2);
   }
-  Serial.println(spdA);
   analogWrite(MOTOR_LEFT_A, speedM1);
   analogWrite(MOTOR_LEFT_B, 0);
   analogWrite(MOTOR_RIGHT_A, speedM2);
   analogWrite(MOTOR_RIGHT_B, 0);
 }
-
+/*===========================================================Sound======================================================*/
 void SoundProcess(int _melody[], int _tempo[], int _size)
 {
   for (int thisNote = 0; thisNote < _size; thisNote++)
