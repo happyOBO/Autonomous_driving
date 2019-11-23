@@ -15,7 +15,7 @@ RPI에서 장착되어있는 파이카메라의 프레임을 ROS를 이용해 se
 
 Github 홈페이지에서 코드별로 설명이 나와있습니다. 그것을 참고해주세요. 
 
-## 코드 분석
+## 코드 분석(picam2.py)
 
 25번줄까진 초기 세팅 작업입니다. 주석을 참고해주세요.
 
@@ -39,3 +39,24 @@ Github 홈페이지에서 코드별로 설명이 나와있습니다. 그것을 �
     49. pub.publish(cv_image)
 
 변환된 프레임을 토픽으로 발행합니다.
+
+## 코드 분석(get_picam.py)
+
+    21. rospy.Subscriber('chatter', Image, callback)
+    
+'chatter' 토픽으로부터 파이카메라 프레임을 받습니다.
+
+    15. cv_image = bridge.imgmsg_to_cv2(data, "bgr8")
+   
+Image 형태의 데이터를 opencv에서 사용할 수 있게 바꿔줍니다.
+이제 opencv 라이브러리의 함수들을 프레임에 적용할 수 있습니다.
+이번 코드에선 원본 영상이 어떻게 나오는지 확인해보겠습니다.
+
+    16. cv2.imshow("cv_image", cv_image)
+    17. cv2.waitKey(1)
+    
+"cv_image" 라는 이름의 윈도우 창에 프레임을 띄웁니다.
+버퍼를 기다리기 위해 0.001초 기다려줍니다.
+
+**결과**
+![결과](/Screenshot from 2019-11-21 00-19-59.png)
