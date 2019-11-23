@@ -60,4 +60,4 @@ Image 형태의 데이터를 opencv에서 사용할 수 있게 바꿔줍니다.
 
 **결과**
 
-![결과](./Screenshot from 2019-11-21 00-19-59.png)
+![결과](./result.png)
