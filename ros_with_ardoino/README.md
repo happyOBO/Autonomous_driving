@@ -3,6 +3,16 @@ Ros with Arduino
 ros를 이용해 Arduino를 제어하기위한 틀이다.
 
 
+먼저 ros에 rosserial을 설치해야한다.
+
+설치방법은 http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup 참고.
+
+실행순서는 roscore > rosrun rosserial_python serial_node.py /dev/ttyACM0 > rostopic pub 토픽이름/자료형 이다.
+
+이때 /dev/ttyACM0의 ttyACM0부분은 arduino에 연결한 port를 확인하여 그 이름을 넣어주어야 한다.
+
+
+
 코드설명
 
 
