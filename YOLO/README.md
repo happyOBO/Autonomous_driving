@@ -4,11 +4,11 @@ YOLO & ROS: Detect Person & Traffic sign
 1.YOLO with webcam
 ------------------
 
-## REASON TO USE
+### REASON TO USE
 
 Detect Person & Traffic sign color
 
-## Installation
+### Installation
 
 You can use python2 and also python3
 
@@ -17,7 +17,7 @@ You can use python2 and also python3
     wget http://pjreddie.com/media/files/yolov3.weights
     python3 cam_demo.py
 
-## The Code Explained : cam_demo.py
+### The Code Explained : cam_demo.py
 
     cfgfile = "cfg/yolov3.cfg" # call yolov3.cfg. You can use other cfg file.
     weightsfile = "yolov3.weights" # call yolov3.weights. Yo can use other weight file too.
@@ -44,18 +44,18 @@ You can use python2 and also python3
                 print("I Don't know color!")
     return img
 
-## 실행화면
+### 실행화면
 
 ![running_view](./demo.png){: width="80%" height="80%"}
 
 2.YOLO With ROS
 ----------------
 
-## Overview
+### Overview
 
 Detecting person, Car & traffic sign on Video that Raspberry pi's pi cam sends. Also It publishes processed data(locations,labels and traffic sign colors).
 
-## Install
+### Install
 
 I recommend to running on python2.7
 
