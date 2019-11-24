@@ -46,7 +46,7 @@ You can use python2 and also python3
 
 ### 실행화면
 
-![running_view](./demo.png){: width="60%" height="60%"}
+![running_view](./demo.png){: width="400" height="300"}
 
 2.YOLO With ROS
 ----------------
