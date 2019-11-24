@@ -7,7 +7,7 @@ YOLO : Detect Person & Traffic sign
 
 ## 실행 방법
 
-    # python2.7 및 python3.6 등에서 사용할 수 있습니다.
+# python2.7 및 python3.6 등에서 사용할 수 있습니다.
 
     git clone https://github.com/happyOBO/ZumiGamma
     cd YOLO
