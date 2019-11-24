@@ -1,20 +1,23 @@
-YOLO : Detect Person & Traffic sign
+YOLO & ROS: Detect Person & Traffic sign
 ==================
+
+1.YOLO with webcam
+------------------
 
 ## REASON TO USE
 
-세부 시나리오에서 설명한 사람감지 및 교통신호 판별을 위해 사용한다.
+Detect Person & Traffic sign color
 
-## 실행 방법
+## Installation
 
-### python2.7 및 python3.6 등에서 사용할 수 있습니다.
+You can use python2 and also python3
 
     git clone https://github.com/happyOBO/ZumiGamma
     cd YOLO
     wget http://pjreddie.com/media/files/yolov3.weights
     python3 cam_demo.py
 
-## 주요 코드 설명 : cam_demo.py
+## The Code Explained : cam_demo.py
 
     cfgfile = "cfg/yolov3.cfg" # call yolov3.cfg. You can use other cfg file.
     weightsfile = "yolov3.weights" # call yolov3.weights. Yo can use other weight file too.
@@ -43,4 +46,34 @@ YOLO : Detect Person & Traffic sign
 
 ## 실행화면
 
-![실행화면](./demo.png)
+![running_view](./demo.png){: width="80%" height="80%"}
+
+2.YOLO With ROS
+----------------
+
+## Overview
+
+Detecting person, Car & traffic sign on Video that Raspberry pi's pi cam sends. Also It publishes processed data(locations,labels and traffic sign colors).
+
+## Install
+
+I recommend to running on python2.7
+
+    # You should make your ros package at catkin_ws first.
+    cd ~/catkin_ws/src/{YOUR_PACKAGE_NAME}/
+    mkdir scripts
+    cd ~/
+    git clone https://github.com/happyOBO/ZumiGamma
+    # Move YOLO contents to YOUR_PACKAGE
+    mv -rf ~/YOLO/* ~/catkin_ws/src/{YOUR_PACKAGE_NAME}/scripts
+    # You Can Remove other files If You don't need them.
+    rm -rf ~/YOLO
+    cd ~/catkin_ws/src/{YOUR_PACKAGE_NAME}
+    wget http://pjreddie.com/media/files/yolov3.weights
+    chmod +x send_tpc_data.py
+    source ~/catkin_ws/dev/setup.bash
+
+    cd ~/catkin_ws
+    catkin_make
+
+    rosrun {YOUR_PACKAGE_NAME} send_tpc_data.py
