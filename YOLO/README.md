@@ -1,11 +1,13 @@
 YOLO : Detect Person & Traffic sign
 ==================
 
-## HOW TO USE
+## REASON TO USE
 
 세부 시나리오에서 설명한 사람감지 및 교통신호 판별을 위해 사용한다.
 
 ## 실행 방법
+
+    # python2.7 및 python3.6 등에서 사용할 수 있습니다.
 
     git clone https://github.com/happyOBO/ZumiGamma
     cd YOLO
@@ -38,3 +40,7 @@ YOLO : Detect Person & Traffic sign
             else :
                 print("I Don't know color!")
     return img
+
+## 실행화면
+
+![실행화면](./demo.png)

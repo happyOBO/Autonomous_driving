@@ -48,7 +48,8 @@ def prep_image_pil(img, network_dim):
     dim = img.size
     img = img.resize(network_dim)
     img = torch.ByteTensor(torch.ByteStorage.from_buffer(img.tobytes()))
-    img = img.view(*network_dim, 3).transpose(0,1).transpose(0,2).contiguous()
+    print(network_dim)
+    img = img.view(network_dim, 3).transpose(0,1).transpose(0,2).contiguous()
     img = img.view(1, 3,*network_dim)
     img = img.float().div(255.0)
     return (img, orig_im, dim)
