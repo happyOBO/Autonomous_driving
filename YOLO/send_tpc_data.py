@@ -17,11 +17,12 @@ import rospy
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
+from std_msgs.msg import String, Int16MultiArray
 
 print("import done")
 
 bridge = CvBridge()
-
+classes = load_classes('data/coco.names')
 # cv2.namedWindow("cv_image", cv2.WINDOW_NORMAL)
 
 #def callback(data):
@@ -48,9 +49,13 @@ def prep_image(img, inp_dim):
     return img_, orig_im, dim
 
 def write(x, img):
+    
     c1 = tuple(x[1:3].int())
     c2 = tuple(x[3:5].int())
     cls = int(x[-1])
+    print("x : ",x)
+    print("cls : " ,cls)
+    global classes
     label = "{0}".format(classes[cls])
     # color = random.choice(colors)
     cv2.rectangle(img, c1, c2,[255,255,255], 1)
@@ -59,9 +64,11 @@ def write(x, img):
     cv2.rectangle(img, c1,( c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4),[0,0,0], -1)
     cv2.putText(img, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225,255,255], 1);
     dst = img[c1[1]:c2[1],c1[0]:c2[0]]
+
     pub_trf = rospy.Publisher('send_trf', String, queue_size=10)
     pub_percar = rospy.Publisher('send_percar', Int16MultiArray, queue_size=1)
-    rospy.init_node('talker', anonymous=True)
+    # rospy.init_node('talker', anonymous=True)
+
     if label == 'traffic light':
         lower_blue = np.array([110, 100, 100])
         upper_blue = np.array([130, 255, 255])
@@ -94,11 +101,14 @@ def write(x, img):
     elif label == 'person' or label == 'car ':
         percar_msg = Int16MultiArray()
         if label == 'person':
+            print("IT is Person")
             percar_msg.data = [0,c1[1],c2[1],c1[0],c2[0]]
+            rospy.loginfo(percar_msg)
+            pub_percar.publish(percar_msg)
         else :
             percar_msg.data = [1,c1[1],c2[1],c1[0],c2[0]]
-        rospy.loginfo(percar_msg)
-        pub_percar.publish(percar_msg)
+            rospy.loginfo(percar_msg)
+            pub_percar.publish(percar_msg)
     else :
         pass
     return img
@@ -120,15 +130,13 @@ def arg_parse():
 
 
 def callback(data):
-    cfgfile = "~/catkin_ws/src/send_yolo_data/script/cfg/yolov3.cfg"
-    weightsfile = "~/catkin_ws/src/send_yolo_data/script/yolov3.weights"
+    cfgfile = "cfg/yolov3.cfg"
+    weightsfile = "yolov3.weights"
     num_classes = 80
     args = arg_parse()
     confidence = float(args.confidence)
     nms_thesh = float(args.nms_thresh)
-    start = 0
     CUDA = torch.cuda.is_available()
-    num_classes = 80
     bbox_attrs = 5 + num_classes
     model = Darknet(cfgfile)
     model.load_weights(weightsfile)
@@ -139,14 +147,14 @@ def callback(data):
     if CUDA:
         model.cuda()      
     model.eval()
-
     frame = bridge.imgmsg_to_cv2(data, "bgr8")
-    # cv2.imshow("cv_image", cv_image)
-    #print("get")
+    # cv2.imshow("cv_image",frame)
+    # print("get")
     # cv2.waitKey(1)
 
     img, orig_im, dim = prep_image(frame, inp_dim)
     
+    # print(img)
     if CUDA:
         im_dim = im_dim.cuda()
         img = img.cuda()
@@ -155,14 +163,14 @@ def callback(data):
     output = model(Variable(img), CUDA)
     output = write_results(output, confidence, num_classes, nms = True, nms_conf = nms_thesh)
 
-    if type(output) == int:
-        frames += 1
-        print("FPS of the video is {:5.2f}".format( frames / (time.time() - start)))
-        cv2.imshow("frame", orig_im)
-        key = cv2.waitKey(1)
-        if key & 0xFF == ord('q'):
-            quit()
-        pass
+    # if type(output) == int:
+    #     frames += 1
+    #     print("FPS of the video is {:5.2f}".format( frames / (time.time() - start)))
+    #     cv2.imshow("frame", orig_im)
+    #     key = cv2.waitKey(1)
+    #     if key & 0xFF == ord('q'):
+    #         quit()
+    #     pass
     
 
 
@@ -173,18 +181,19 @@ def callback(data):
     output[:,[2,4]] *= frame.shape[0]
 
     
-    classes = load_classes('data/coco.names')
+
+
     # colors = pkl.load(open("pallete", "rb"))
     
-    list(map(lambda x: write(x, orig_im), output))
-    
-    
+    map(lambda x: write(x, orig_im), output)
+    # write(output,orig_im)
+    # print(output)
     cv2.imshow("frame", orig_im)
     key = cv2.waitKey(1)
-    if key & 0xFF == ord('q'):
-        quit()
-    frames += 1
-    print("FPS of the video is {:5.2f}".format( frames / (time.time() - start)))
+    # if key & 0xFF == ord('q'):
+    #     quit()
+    # frames += 1
+    # print("FPS of the video is {:5.2f}".format( frames / (time.time() - start)))
 
 
 
