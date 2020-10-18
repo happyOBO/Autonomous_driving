@@ -24,4 +24,4 @@ ZumiGamma : 로스를 이용한 자율주행 응급차량 만들기
   - 도로에서 주행을 하되, 앞에 차량이 있을시에 비켜서 갈 수 있다.
   - traffic sign을 무시하고 주행한다.
 
-[![Video Label](http://img.youtube.com/vi/5Nq359LHPZc/0.jpg)](https://youtu.be/5Nq359LHPZc)
+[![Video Label](http://img.youtube.com/vi/u1tr6ZiykoM/0.jpg)](https://youtu.be/u1tr6ZiykoM)
